@@ -1,0 +1,16 @@
+.navbar{
+    position: sticky;
+    z-index: 100;
+    top: 0;
+    background-color: var(--react-black);
+    color: var(--react-white);
+    padding: 24px 42px;
+}
+
+.navbar .reactLogo--medium{
+    margin-right: 12px;
+}
+
+.navbar ul li{
+    margin-left: 24px;
+}

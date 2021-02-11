@@ -1,0 +1,136 @@
+@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@100;300;400;500;700;900&display=swap');
+
+*, *::after, *::before{
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+    font-family: "Roboto";
+    font-weight: 500;   
+}
+
+body{
+    color: var(--react-black);
+}
+
+:root{
+    --react-blue: #60dafb;
+    --react-black: #1F232A;
+    --react-white: #ffffff;
+}
+
+ul{
+    list-style: none;
+}
+
+a{
+    text-decoration: none;
+    color: unset;
+}
+
+.content--container{
+    max-width: 1450px;
+    margin: 0 auto;
+    padding: 64px 24px;
+}
+
+/* flexbox classes*/
+.flex-box{
+    display: flex;
+}
+
+.ai-center{
+    align-items: center;
+}
+
+.ai-start{
+    align-items: flex-start;
+}
+
+.ai-end{
+    align-items: flex-end;
+}
+
+.jc-center{
+    justify-content: center;
+}
+
+.jc-start{
+    justify-content: flex-start;
+}
+
+.jc-end{
+    justify-content: flex-end;
+}
+
+.jc-space{
+    justify-content: space-between;
+}
+
+.flex-dir-col{
+    flex-direction: column;
+}
+
+.flex-dir-row{
+    flex-direction: row;
+}
+
+.flex-25{
+    flex: 0.25;
+}
+
+.flex-50{
+    flex: 0.5;
+}
+
+/* grid */
+.grid{
+    display: grid;
+}
+
+.col-3{
+    grid-template-columns: repeat(3, 1fr);
+    gap: 64px;
+}
+
+/* assets sizes (icons, images) */
+.reactLogo--medium{
+    width: 42px;
+    height: 42px;
+}
+
+.icon--small{
+    font-size: 28px;
+    border-radius: 50%;
+    transition: background 0.3s ease;
+}
+
+a .icon--small:hover{
+    background-color: rgba(0, 0, 0, 0.3)
+}
+
+.icon--extraSmall{
+    font-size: 16px;
+}
+
+/* loading */
+.donutSpinner {
+    display: inline-block;
+    border: 5px solid #1f232a2a;
+    border-left-color: var(--react-blue);
+    border-radius: 50%;
+    width: 42px;
+    height: 42px;
+    animation: spin 1.2s linear infinite;
+}
+
+.donutSpinner--container{
+    margin: 64px 0;
+    min-height: 200px;
+}
+
+@keyframes spin {
+    to {
+        transform: rotate(1turn);
+    }
+}
+

@@ -1,7 +1,12 @@
+import Navbar from "./components/Navbar/Navbar";
+import "./App.css"
+import Home from "./components/Home/Home";
+
 const App = () => {
   return (
     <>
-      <h1>React Artics</h1>
+      <Navbar />
+      <Home />
     </>
   );
 }

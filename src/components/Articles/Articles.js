@@ -1,5 +1,5 @@
 import Article from "./Article/Article";
-import Loader from "../Loader/Loader"
+import Loader from "../../widgets/Loader/Loader"
 import { useState } from "react";
 
 const Articles = () => {

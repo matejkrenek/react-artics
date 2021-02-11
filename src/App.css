@@ -12,6 +12,10 @@ body{
     color: var(--react-black);
 }
 
+html::-webkit-scrollbar{
+    display: none;
+}
+
 :root{
     --react-blue: #60dafb;
     --react-black: #1F232A;
@@ -31,6 +35,12 @@ a{
     max-width: 1450px;
     margin: 0 auto;
     padding: 64px 24px;
+}
+
+.smallContent--container{
+    max-width: 750px;
+    margin: 0 auto;
+    padding: 120px 24px;
 }
 
 /* flexbox classes*/
@@ -81,6 +91,109 @@ a{
 .flex-50{
     flex: 0.5;
 }
+
+form{
+    display: flex;
+    flex-direction: column;
+}
+
+form .btn--blue{
+    margin-bottom: 42px;
+}
+
+.inputField{
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 24px;
+}
+
+.inputField label{
+    margin-bottom: 8px;
+    font-size: 18px;
+    font-weight: 700;
+}
+
+.inputField input{
+    padding: 16px 24px;
+    outline: none;
+    border: none;
+    background-color: #1f232a2a;
+    border-radius: 50px;
+    border: 2px solid #1f232a2a;
+    font-size: 18px;
+    color: var(--react-black);
+}
+.inputField input:focus{
+    border: 2px solid #1f232a69;
+
+}
+.btn{
+    align-self: center;
+    padding: 18px 42px;
+    margin-top: 12px;
+    font-size: 18px;
+    font-weight: 400;
+    cursor: pointer;
+    font-family: "Poppins";
+    border-radius: 50px;
+    transition: background 0.3s ease;
+    border: none;
+    outline: none;
+}
+
+.btn.blue{
+    background: var(--react-black);
+    color: var(--react-blue);
+    margin-bottom: 24px;
+
+
+}
+
+.btn.google{
+    border: 2px solid var(--react-black);
+    font-size: 16px;
+    padding: 12px 32px;
+
+}
+
+.divider{
+    width: 80%;
+    margin: 12px auto;
+    height: 1px;
+    background: #1f232a69;
+
+}
+
+.btn.google svg{
+    margin-right: 8px;
+}
+
+.btn.blue:hover {
+    background: #1f232aef;
+}
+
+.authHeader{
+    margin-bottom: 42px;
+}
+
+.authHeader h1{
+    font-size: 48px;
+    margin-bottom: 4px;
+}
+
+.authHeader span{
+    color: #1f232a69;
+}
+
+.authHeader span a{
+    color: var(--react-black);
+}
+
+.authHeader span a:hover{
+    border-bottom: 1px solid var(--react-blue);
+}
+
+
 
 /* grid */
 .grid{

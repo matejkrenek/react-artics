@@ -1,10 +1,19 @@
 import "./Navbar.css";
 import reactLogo from "../../assets/react-logo.png";
-import { Link, useLocation } from "react-router-dom";
-import { BiLogInCircle, BiUserCircle, BiPlus } from "react-icons/bi"
+import { Link, useLocation, useHistory } from "react-router-dom";
+import { BiLogInCircle, BiUserCircle, BiPlus, BiUserX } from "react-icons/bi";
+import { auth } from "../../config" 
 
-const Navbar = () => {
+const Navbar = ({ user, isLoading }) => {
     const location = useLocation()
+    const history = useHistory()
+
+    const onClick = () => {
+        auth.signOut()
+        .then(() => {
+        })
+        .catch(err => console.log(err))
+    }
 
     return ( 
         <nav className="navbar flex-box ai-center">
@@ -18,9 +27,10 @@ const Navbar = () => {
             <ul className="flex-box ai-center jc-end flex-25">
                 {location.pathname != "/register" && location.pathname != "/login" &&
                 <>
-                    <li><Link to="/profile"><BiUserCircle className="icon--small"/></Link></li>
-                    <li><Link to="/create"><BiPlus className="icon--small"/></Link></li>
-                    <li><Link to="/register"><BiLogInCircle className="icon--small"/></Link></li>
+                    {user && <li><Link to="/profile"><BiUserCircle className="icon--small"/></Link></li>}
+                    {user && <li><Link to="/create"><BiPlus className="icon--small"/></Link></li>}
+                    {!user && !isLoading && <li><Link to="/register"><BiLogInCircle className="icon--small"/></Link></li>}
+                    {user && <li onClick={onClick}><BiUserX className="icon--small"/></li>}
                 </>
                 }
             </ul>

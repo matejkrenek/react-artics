@@ -1,12 +1,14 @@
-import firebase from "firebase"
-import config from "../config"
+import { auth } from "../config"
 
-firebase.initializeApp(config)
-
-const stateChange = () => {
-    firebase.auth().onAuthStateChanged((user) => {
-        console.log(user)
-    });
+const emailSignup = (email, password) => {
+    return auth.createUserWithEmailAndPassword(email, password)
 }
- 
-export default stateChange;
+
+const emailLogin = (email, password) => {
+    return auth.signInWithEmailAndPassword(email, password)
+}
+
+export {
+    emailSignup,
+    emailLogin
+}

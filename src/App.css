@@ -134,11 +134,11 @@ form .btn--blue{
     font-size: 18px;
     font-weight: 400;
     cursor: pointer;
-    font-family: "Poppins";
     border-radius: 50px;
     transition: background 0.3s ease;
     border: none;
     outline: none;
+    min-width: 150px;
 }
 
 .btn.blue{
@@ -228,17 +228,15 @@ a .icon--small:hover{
 /* loading */
 .donutSpinner {
     display: inline-block;
-    border: 5px solid #1f232a2a;
+    border: 3px solid #1f232a2a;
     border-left-color: var(--react-blue);
     border-radius: 50%;
-    width: 42px;
-    height: 42px;
+    width: 24px;
+    height: 24px;
     animation: spin 1.2s linear infinite;
 }
 
 .donutSpinner--container{
-    margin: 64px 0;
-    min-height: 200px;
 }
 
 @keyframes spin {

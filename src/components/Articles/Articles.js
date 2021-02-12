@@ -5,8 +5,6 @@ import { useState } from "react";
 const Articles = () => {
     const [isLoading, setIsLoading] = useState(true)
 
-    console.log(isLoading)
-
     setTimeout(() => {
         setIsLoading(false)
     }, 500)

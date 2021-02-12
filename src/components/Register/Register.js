@@ -1,32 +1,34 @@
 import { useState } from "react"
-import { Link, useHistory } from "react-router-dom"
+import { Link } from "react-router-dom"
 import { FaGoogle } from "react-icons/fa"
-import { emailSignup } from "../../firebase/firebase"
+import { emailSignup, googleLogin } from "../../firebase/firebase"
 import Loader from "../../widgets/Loader/Loader"
+import { useEffect } from "react/cjs/react.development"
 
 const Register = () => {
     const [email, setEmail] = useState("");
     const [password, setPasswod] = useState("");
-    const [isLoading, setIsLoading] = useState(false)
-    const history = useHistory()
+    const [isLoading, setIsLoading] = useState(false);
+    const [errorMessage, setErrorMessage] = useState("");
 
     const handleSubmit = (e) => {
         e.preventDefault()
-
+        
         setIsLoading(true)
 
         const register = emailSignup(email, password)
-        .then(res => {
+        .then((creds) => {
             setIsLoading(false)
-            history.push("/")
-        }).catch(err => {
+        })
+        .catch(err => {
             setIsLoading(false)
-            console.log(err.message)
+            setErrorMessage(err.message)
         })
     }
-
+    
     return ( 
         <div className="smallContent--container">
+            <div className="errorMessage">{errorMessage}</div>
             <div className="authHeader">
                 <h1>Create your own new account</h1>
                 <span>Do you already have an account? <Link to="/login">Login</Link></span>
@@ -52,7 +54,7 @@ const Register = () => {
                     {isLoading ? <Loader /> : "Create an Account"}
                 </button>
                 <div className="divider"></div>
-                <a type="submit" className="btn google flex-box ai-center"><FaGoogle/> Signup with google</a>
+                <a type="submit" className="btn google flex-box ai-center" onClick={googleLogin}><FaGoogle/> Signup with google</a>
             </form>
         </div> 
     );

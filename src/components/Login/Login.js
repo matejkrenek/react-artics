@@ -1,14 +1,14 @@
 import { useState } from "react";
-import { Link, useHistory } from "react-router-dom";
+import { Link } from "react-router-dom";
 import { FaGoogle } from "react-icons/fa";
 import Loader from "../../widgets/Loader/Loader"
-import { emailLogin } from "../../firebase/firebase";
+import { emailLogin, googleLogin } from "../../firebase/firebase";
 
 const Login = () => {
     const [email, setEmail] = useState("");
     const [password, setPasswod] = useState("");
     const [isLoading, setIsLoading] = useState(false)
-    const history = useHistory()
+    const [errorMessage, setErrorMessage] = useState("")
 
     const handleSubmit = (e) => {
         e.preventDefault()
@@ -16,17 +16,17 @@ const Login = () => {
         setIsLoading(true)
 
         const login = emailLogin(email, password)
-        .then(res => {
+        .then(creds => {
             setIsLoading(false)
-            history.push("/")
         }).catch(err => {
             setIsLoading(false)
-            console.log(err.message)
+            setErrorMessage(err.message)
         })
     }
 
     return ( 
         <div className="smallContent--container">
+            <div className="errorMessage">{errorMessage}</div>
             <div className="authHeader">
                 <h1>Login to your account</h1>
                 <span>You don't have an account? <Link to="/register">Sign up</Link></span>
@@ -52,7 +52,7 @@ const Login = () => {
                     {isLoading ? <Loader /> : "Login"}
                 </button>
                 <div className="divider"></div>
-                <a type="submit" className="btn google flex-box ai-center"><FaGoogle/> Login with google</a>
+                <a type="submit" className="btn google flex-box ai-center" onClick={googleLogin}><FaGoogle/> Login with google</a>
             </form>
         </div> 
     );

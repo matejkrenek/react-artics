@@ -113,7 +113,8 @@ form .btn--blue{
     font-weight: 700;
 }
 
-.inputField input{
+.inputField input,
+.inputField textarea{
     padding: 16px 24px;
     outline: none;
     border: none;
@@ -123,6 +124,13 @@ form .btn--blue{
     font-size: 18px;
     color: var(--react-black);
 }
+
+.inputField textarea{
+    resize: vertical;
+    min-height: 300px;
+}
+
+
 .inputField input:focus{
     border: 2px solid #1f232a69;
 
@@ -162,6 +170,11 @@ form .btn--blue{
     height: 1px;
     background: #1f232a69;
 
+}
+
+.errorMessage {
+    color: red;
+    margin-bottom: 12px;
 }
 
 .btn.google svg{

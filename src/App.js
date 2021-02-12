@@ -7,6 +7,7 @@ import { BrowserRouter as Router, Route, Switch, Redirect } from "react-router-d
 import "./App.css"
 import { auth } from "./config"
 import Loader from "./widgets/Loader/Loader";
+import CreateArticle from "./components/Articles/CreateArticle/CreateArticle";
 
 const App = () => {  
 const [user, setUser] = useState(null)
@@ -37,6 +38,9 @@ useEffect(() => {
           </Route>
           <Route exact path="/register">
           {user ? <Redirect to="/" /> : isLoading ? <Loader /> : <Register />}
+          </Route>
+          <Route exact path="/create">
+            {!user ? <Redirect to="/register" /> : isLoading ? <Loader /> : <CreateArticle />}
           </Route>
         </Switch>
       </>

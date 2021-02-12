@@ -1,6 +1,7 @@
 import { BiBookmark, BiComment, BiLike } from "react-icons/bi"
 
 const Article = ({ image, title, author, created, likes, comments }) => {
+
     return ( 
         <a href="" className="singleArticle__link">
             <div className="singleArticle flex-box">
@@ -16,11 +17,11 @@ const Article = ({ image, title, author, created, likes, comments }) => {
                     <div className="singleArticle__cta flex-box jc-end ai-end flex-dir-col">
                         <div className="flex-box ai-center singleArticle__stats">
                             <p>
-                                {likes} <BiLike className="icon--extraSmall"/>
+                                {likes ? likes : 0} <BiLike className="icon--extraSmall"/>
                             </p>
 
                             <p>
-                                {comments} <BiComment className="icon--extraSmall"/>
+                                {comments ? comments : 0} <BiComment className="icon--extraSmall"/>
                             </p>
                         </div>
                     </div>

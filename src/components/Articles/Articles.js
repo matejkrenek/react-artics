@@ -18,9 +18,9 @@ const Articles = () => {
     return ( 
         <div className="articles">
             {isLoading && <Loader />}
-            {isLoading == false && 
+            {isLoading == false &&
                 articles.map(article => (
-                    <Article key={article.created} image={article.image} title={article.title} author={article.author} created={isToday(article.created.toDate()) ? "today" : format(new Date(article.created.toDate()), 'd. M. EEEE,  h:mm aa')} likes={article.likes} comments={article.comments} />
+                    <Article key={article.id} id={article.id} image={article.image} title={article.title} author={article.author} created={isToday(article.created.toDate()) ? "today" : format(new Date(article.created.toDate()), 'd. M. EEEE,  h:mm aa')} likes={article.likes} comments={article.comments} />
                 ))
             }
         </div>

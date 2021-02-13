@@ -12,6 +12,30 @@ body{
     color: var(--react-black);
 }
 
+strong{
+    font-weight: 700;
+}
+
+blockquote{
+    border-left: 5px solid #1F232A;
+    font-size: 18px;
+    padding-left: 12px;
+}
+
+hr{
+    margin: 32px 0;
+}
+
+figure table{
+    border: 1px solid #1F232A;
+    border-collapse: collapse;
+}
+
+figure table td{
+    padding: 16px;
+    border: 1px solid #1F232A;
+}
+
 html::-webkit-scrollbar{
     display: none;
 }
@@ -139,6 +163,7 @@ form .btn--blue{
     border: 2px solid #1f232a69;
 
 }
+
 .btn{
     align-self: center;
     padding: 18px 42px;

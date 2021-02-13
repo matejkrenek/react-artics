@@ -9,7 +9,7 @@ const emailLogin = (email, password) => {
 } 
 
 const googleLogin = () => {
-    auth.signInWithPopup(provider)
+    auth.signInWithRedirect(provider)
     .then(res => {
         console.log(res)
     }).catch(err => {
@@ -24,8 +24,16 @@ const storeUserInFirestore = (user) => {
     })
 }
 
-const updateUserInFirestore = (userId, data) => {
-    db.collection("users").doc(userId).update(data)
+const updateDoc = (collectionName, docId, data) => {
+    db.collection(collectionName).doc(docId).update(data)
+}
+
+const readDoc = (collectionName, docId) => {
+    return db.collection(collectionName).doc(docId).get()
+}
+
+const removeDoc = (collectionName, docId) => {
+    return db.collection(collectionName).doc(docId).delete()
 }
  
 export {
@@ -33,5 +41,7 @@ export {
     emailLogin,
     googleLogin,
     storeUserInFirestore,
-    updateUserInFirestore
+    updateDoc,
+    readDoc,
+    removeDoc
 }

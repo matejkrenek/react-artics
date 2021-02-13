@@ -5,7 +5,7 @@ import { useHistory } from "react-router-dom"
 import { db } from "../../../config"
 import { UserContext } from "../../../contexts/UserContext";
 import Loader from "../../../widgets/Loader/Loader";
-import { updateUserInFirestore } from "../../../firebase/firebase";
+import { updateDoc } from "../../../firebase/firebase";
 import { ArticleContext } from "../../../contexts/ArticleContext";
 
 const CreateArticle = () => {
@@ -26,9 +26,16 @@ const CreateArticle = () => {
             body: body,
             created: new Date(),
         }).then(res => {
+            return db.collection("articles").doc(res.id).update({
+                id: res.id
+            })
+
+        }).then(() => {
+            updateDoc("users", user.uid, {articles: articles.filter(article => article.authorId == user.uid).map(article => article.id)})
             setIsLoading(false)
             history.push("/")
-        }).catch(err => {
+        })
+        .catch(err => {
             setIsLoading(false)
             console.log(err.message)
         })

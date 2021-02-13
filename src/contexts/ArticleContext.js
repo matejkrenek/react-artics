@@ -9,6 +9,7 @@ export const ArticleProvider = (props) => {
     useEffect(() => {
         db.collection("articles").onSnapshot((items) => {
             try {
+
                 let arr = []
                 items.forEach(item => {
                     arr.push(item.data())

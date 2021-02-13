@@ -9,6 +9,7 @@ import Loader from "./widgets/Loader/Loader";
 import CreateArticle from "./components/Articles/CreateArticle/CreateArticle";
 import { ArticleProvider } from "./contexts/ArticleContext"
 import { UserProvider, UserContext } from "./contexts/UserContext"
+import ArticlePreview from "./components/Articles/ArticlePreview/ArticlePreview";
 
 const App = () => {  
   return (
@@ -28,6 +29,9 @@ const App = () => {
             </Route>
             <Route exact path="/create">
               <CreateArticle />
+            </Route>
+            <Route exact path="/article/:id">
+              <ArticlePreview />
             </Route>
           </Switch>
         </UserProvider>

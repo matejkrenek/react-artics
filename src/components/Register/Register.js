@@ -19,7 +19,7 @@ const Register = () => {
         setIsLoading(true)
 
         const register = emailSignup(email, password)
-        .then((creds) => {
+        .then((creds) => {   
             storeUserInFirestore(creds.user)
             setIsLoading(false)
         })

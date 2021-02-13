@@ -1,9 +1,10 @@
 import { BiBookmark, BiComment, BiLike } from "react-icons/bi"
+import { Link } from "react-router-dom";
 
-const Article = ({ image, title, author, created, likes, comments }) => {
+const Article = ({ image, title, author, created, likes, comments, id }) => {
 
     return ( 
-        <a href="" className="singleArticle__link">
+        <Link to={`/article/${id}`} className="singleArticle__link">
             <div className="singleArticle flex-box">
                 <div className="singleArticle__image">
                     <img src={image} alt=""/>
@@ -27,7 +28,7 @@ const Article = ({ image, title, author, created, likes, comments }) => {
                     </div>
                 </div>
             </div>
-        </a>
+        </Link>
     );
 }
  

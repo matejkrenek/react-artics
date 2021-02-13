@@ -1,12 +1,15 @@
 import "./Navbar.css";
+import { useContext, useState } from "react";
 import reactLogo from "../../assets/react-logo.png";
 import { Link, useLocation, useHistory } from "react-router-dom";
 import { BiLogInCircle, BiUserCircle, BiPlus, BiUserX } from "react-icons/bi";
 import { auth } from "../../config" 
+import { UserContext } from "../../contexts/UserContext"
 
-const Navbar = ({ user, isLoading }) => {
+const Navbar = () => {
     const location = useLocation()
-    const history = useHistory()
+    const [isLoading, setIsLoading] = useState(false)
+    const [user, setUser] = useContext(UserContext)
 
     const onClick = () => {
         auth.signOut()

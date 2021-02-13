@@ -1,15 +1,17 @@
-import { useState } from "react"
-import { Link } from "react-router-dom"
+import { useState, useContext, useEffect } from "react"
+import { Link, useHistory } from "react-router-dom"
 import { FaGoogle } from "react-icons/fa"
-import { emailSignup, googleLogin } from "../../firebase/firebase"
+import { emailSignup, googleLogin, storeUserInFirestore } from "../../firebase/firebase"
 import Loader from "../../widgets/Loader/Loader"
-import { useEffect } from "react/cjs/react.development"
+import { UserContext } from "../../contexts/UserContext"
 
 const Register = () => {
     const [email, setEmail] = useState("");
     const [password, setPasswod] = useState("");
     const [isLoading, setIsLoading] = useState(false);
     const [errorMessage, setErrorMessage] = useState("");
+    const [user, setUser] = useContext(UserContext);
+    const history = useHistory();
 
     const handleSubmit = (e) => {
         e.preventDefault()
@@ -18,6 +20,7 @@ const Register = () => {
 
         const register = emailSignup(email, password)
         .then((creds) => {
+            storeUserInFirestore(creds.user)
             setIsLoading(false)
         })
         .catch(err => {
@@ -25,6 +28,12 @@ const Register = () => {
             setErrorMessage(err.message)
         })
     }
+
+    useEffect(() => {
+        if(user){
+            history.push("/")
+        }
+    }, [user])
     
     return ( 
         <div className="smallContent--container">

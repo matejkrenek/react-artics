@@ -1,35 +1,19 @@
 import Article from "./Article/Article";
-import { format, isToday, is } from "date-fns"
+import { format, isToday } from "date-fns"
 import Loader from "../../widgets/Loader/Loader"
-import { useState, useEffect } from "react";
-import { db } from "../../config"
+import { useState, useContext, useEffect } from "react";
+import { ArticleContext } from "../../contexts/ArticleContext"
 
 const Articles = () => {
+    const [articles, setArticles] = useContext(ArticleContext)
     const [isLoading, setIsLoading] = useState(true)
-    const [articles, setArticles] = useState([])
 
     useEffect(() => {
-        db.collection("articles").onSnapshot((items) => {
-            try {
-                let arr = []
-                items.forEach(item => {
-                    arr.push(item.data())
-                })
+        if(articles.length > 0){
+            setIsLoading(false)
+        }
+    }, [articles])
     
-                arr.sort((a, b) => {
-                    return b.created.toDate() - a.created.toDate()
-                })
-    
-                setArticles(arr)
-                setIsLoading(false)
-            }
-            catch(err){
-                console.log(err)
-            }
-        })
-    }, []) 
-
-
     
     return ( 
         <div className="articles">

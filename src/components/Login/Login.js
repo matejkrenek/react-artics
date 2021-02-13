@@ -1,14 +1,17 @@
-import { useState } from "react";
-import { Link } from "react-router-dom";
+import { useState, useContext, useEffect } from "react";
+import { Link, useHistory } from "react-router-dom";
 import { FaGoogle } from "react-icons/fa";
 import Loader from "../../widgets/Loader/Loader"
 import { emailLogin, googleLogin } from "../../firebase/firebase";
+import { UserContext } from "../../contexts/UserContext";
 
 const Login = () => {
     const [email, setEmail] = useState("");
     const [password, setPasswod] = useState("");
-    const [isLoading, setIsLoading] = useState(false)
-    const [errorMessage, setErrorMessage] = useState("")
+    const [isLoading, setIsLoading] = useState(false);
+    const [errorMessage, setErrorMessage] = useState("");
+    const [user, setUser] = useContext(UserContext)
+    const history = useHistory()
 
     const handleSubmit = (e) => {
         e.preventDefault()
@@ -23,6 +26,14 @@ const Login = () => {
             setErrorMessage(err.message)
         })
     }
+
+    useEffect(() => {
+        if(user){
+            history.push("/")
+        }
+    }, [user])
+
+
 
     return ( 
         <div className="smallContent--container">

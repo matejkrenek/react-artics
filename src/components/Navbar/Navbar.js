@@ -18,6 +18,8 @@ const Navbar = () => {
         .catch(err => console.log(err))
     }
 
+    console.log(user)
+
     return ( 
         <nav className="navbar flex-box ai-center">
             <div className="flex-box ai-center flex-25"></div>

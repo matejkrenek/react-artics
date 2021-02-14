@@ -17,6 +17,7 @@ const Articles = () => {
     
     return ( 
         <div className="articles">
+            <h1>Articles</h1>
             {isLoading && <Loader />}
             {isLoading == false &&
                 articles.map(article => (

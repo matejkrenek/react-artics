@@ -2,7 +2,7 @@ import { useState, useContext, useEffect } from "react";
 import { Link, useHistory } from "react-router-dom";
 import { FaGoogle } from "react-icons/fa";
 import Loader from "../../widgets/Loader/Loader"
-import { emailLogin, googleLogin } from "../../firebase/firebase";
+import { emailLogin, googleLogin, readDoc, storeUserInFirestore } from "../../firebase/firebase";
 import { UserContext } from "../../contexts/UserContext";
 
 const Login = () => {
@@ -27,13 +27,20 @@ const Login = () => {
         })
     }
 
+    const handleGoogleLogin = () => {
+        const google = googleLogin()
+        .then((res) => {
+            storeUserInFirestore(res.user, "google")
+        }).catch(err => {
+            setErrorMessage(err.message)
+        })
+    }
+
     useEffect(() => {
         if(user){
             history.push("/")
         }
     }, [user])
-
-
 
     return ( 
         <div className="smallContent--container">
@@ -63,7 +70,7 @@ const Login = () => {
                     {isLoading ? <Loader /> : "Login"}
                 </button>
                 <div className="divider"></div>
-                <a type="submit" className="btn google flex-box ai-center" onClick={googleLogin}><FaGoogle/> Login with google</a>
+                <a type="submit" className="btn google flex-box ai-center" onClick={handleGoogleLogin}><FaGoogle/> Login with google</a>
             </form>
         </div> 
     );

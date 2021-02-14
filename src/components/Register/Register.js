@@ -20,11 +20,20 @@ const Register = () => {
 
         const register = emailSignup(email, password)
         .then((creds) => {   
-            storeUserInFirestore(creds.user)
+            storeUserInFirestore(creds.user, "email")
             setIsLoading(false)
         })
         .catch(err => {
             setIsLoading(false)
+            setErrorMessage(err.message)
+        })
+    }
+
+    const handleGoogleRegistration = () => {
+        const google = googleLogin()
+        .then((res) => {
+            storeUserInFirestore(res.user, "google")
+        }).catch(err => {
             setErrorMessage(err.message)
         })
     }
@@ -63,7 +72,7 @@ const Register = () => {
                     {isLoading ? <Loader /> : "Create an Account"}
                 </button>
                 <div className="divider"></div>
-                <a type="submit" className="btn google flex-box ai-center" onClick={googleLogin}><FaGoogle/> Signup with google</a>
+                <a type="submit" className="btn google flex-box ai-center" onClick={handleGoogleRegistration}><FaGoogle/> Signup with google</a>
             </form>
         </div> 
     );

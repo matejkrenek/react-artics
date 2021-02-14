@@ -9,19 +9,16 @@ const emailLogin = (email, password) => {
 } 
 
 const googleLogin = () => {
-    auth.signInWithRedirect(provider)
-    .then(res => {
-        console.log(res)
-    }).catch(err => {
-        console.log(err)
-    })
+    return auth.signInWithPopup(provider)
 }
 
-const storeUserInFirestore = (user) => {
+const storeUserInFirestore = (user, service) => {
     db.collection("users").doc(user.uid).set({
         email: user.email,
         displayName: user.displayName,
-    })
+        service: service
+    }).then(res => console.log("response is:", res))
+    .catch(err => console.log("error:", err.message))
 }
 
 const updateDoc = (collectionName, docId, data) => {

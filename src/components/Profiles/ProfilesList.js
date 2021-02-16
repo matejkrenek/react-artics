@@ -20,7 +20,7 @@ const Profiles = () => {
             {isLoading && <Loader />}
             {isLoading == false &&
                 users.map((user) => (
-                    <ProfileItem key={user.email} email={user.email} articlesNum={user.articles != null ? user.articles.length : 0} name={user.displayName}/>
+                    <ProfileItem key={user.email} uid={user.uid} photoURL={user.photoURL} email={user.email} articlesNum={user.articles != null ? user.articles.length : 0} name={user.displayName}/>
                 ))
             }
         </div>

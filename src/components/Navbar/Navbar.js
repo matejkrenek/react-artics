@@ -13,12 +13,7 @@ const Navbar = () => {
 
     const onClick = () => {
         auth.signOut()
-        .then(() => {
-        })
-        .catch(err => console.log(err))
     }
-
-    console.log(user)
 
     return ( 
         <nav className="navbar flex-box ai-center">

@@ -5,15 +5,15 @@ import { useHistory } from "react-router-dom"
 import { db } from "../../../config"
 import { UserContext } from "../../../contexts/UserContext";
 import Loader from "../../../widgets/Loader/Loader";
-import { updateDoc } from "../../../firebase/firebase";
+import { readDoc, updateDoc } from "../../../firebase/firebase";
 import { ArticleContext } from "../../../contexts/ArticleContext";
 
 const CreateArticle = () => {
-    const [title, setTitle] = useState("")
-    const [body, setBody] = useState("")
+    const [title, setTitle] = useState("");
+    const [body, setBody] = useState("");
     const [user, setUser] = useContext(UserContext);
     const [articles, setArticles] = useContext(ArticleContext);
-    const [isLoading, setIsLoading] = useState(false)
+    const [isLoading, setIsLoading] = useState(false);
     const history = useHistory();
 
     const handleSubmit = (e) => {
@@ -26,14 +26,21 @@ const CreateArticle = () => {
             body: body,
             created: new Date(),
         }).then(res => {
-            return db.collection("articles").doc(res.id).update({
+            db.collection("articles").doc(res.id).update({
                 id: res.id
             })
 
-        }).then(() => {
-            updateDoc("users", user.uid, {articles: articles.filter(article => article.authorId == user.uid).map(article => article.id)})
-            setIsLoading(false)
-            history.push("/")
+            readDoc("articles", res.id)
+            .then(articleData => {
+                const newArray = [...articles, articleData.data()]
+                updateDoc("users", user.uid, {articles: newArray.map(article => article.id)})
+                setIsLoading(false)
+                history.push("/")
+            })
+            .catch(err => console.log(err))
+
+
+
         })
         .catch(err => {
             setIsLoading(false)

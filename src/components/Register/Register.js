@@ -33,6 +33,7 @@ const Register = () => {
         const google = googleLogin()
         .then((res) => {
             storeUserInFirestore(res.user, "google")
+            console.log(res.user)
         }).catch(err => {
             setErrorMessage(err.message)
         })

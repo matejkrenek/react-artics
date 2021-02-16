@@ -11,6 +11,7 @@ import { ArticleProvider } from "./contexts/ArticleContext"
 import { UserProvider } from "./contexts/UserContext"
 import ArticlePreview from "./components/Articles/ArticlePreview/ArticlePreview";
 import { UsersProvider } from "./contexts/UsersContext";
+import ProfilePreview from "./components/Profiles/ProfilePreview/ProfilePreview";
 
 const App = () => {  
   return (
@@ -34,6 +35,12 @@ const App = () => {
               </Route>
               <Route exact path="/article/:id">
                 <ArticlePreview />
+              </Route>
+              <Route exact path="/profile">
+                <ProfilePreview />
+              </Route>
+              <Route exact path="/profile/:uid">
+                <ProfilePreview />
               </Route>
             </Switch>
           </UserProvider>

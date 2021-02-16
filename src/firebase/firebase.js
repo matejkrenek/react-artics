@@ -16,9 +16,13 @@ const storeUserInFirestore = (user, service) => {
     db.collection("users").doc(user.uid).set({
         email: user.email,
         displayName: user.displayName,
-        service: service
-    }).then(res => console.log("response is:", res))
-    .catch(err => console.log("error:", err.message))
+        service: service,
+        uid: user.uid,
+        photoURL: user.photoURL,
+        articles: [],
+        likedArticles: []
+    })
+
 }
 
 const updateDoc = (collectionName, docId, data) => {

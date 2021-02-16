@@ -4,12 +4,12 @@ import Loader from "../../widgets/Loader/Loader"
 import { useState, useContext, useEffect } from "react";
 import { ArticleContext } from "../../contexts/ArticleContext"
 
-const Articles = () => {
+const Articles =  () => {
     const [articles, setArticles] = useContext(ArticleContext)
     const [isLoading, setIsLoading] = useState(true)
 
     useEffect(() => {
-        if(articles.length > 0){
+        if(articles.length){
             setIsLoading(false)
         }
     }, [articles])

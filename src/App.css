@@ -235,7 +235,22 @@ form .btn--blue{
     border-bottom: 1px solid var(--react-blue);
 }
 
+.userImage{
+    max-width: 120px;
+    max-height: 120px;
+    min-width: 120px;
+    min-height: 120px;
+    border-radius: 50%;
+    margin-right: 32px;
+    background-color: #ced4da;
+    overflow: hidden;
+}
 
+.userImage img{
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
 
 /* grid */
 .grid{

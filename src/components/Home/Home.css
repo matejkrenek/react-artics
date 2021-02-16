@@ -77,12 +77,22 @@
 }
 
 .singleProfileItem__profileImage{
+    max-width: 56px;
+    max-height: 56px;
     min-width: 56px;
     min-height: 56px;
     margin-right: 24px;
     background-color: #ced4da;
     border-radius: 50%;
+    overflow: hidden;
 }
+
+.singleProfileItem__profileImage img{
+    object-fit: cover;
+    width: 100%;
+    height: 100%;
+}
+
 .singleProfileItem__content{
     width: 100%;
 }

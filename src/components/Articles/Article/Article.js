@@ -1,7 +1,7 @@
 import { BiBookmark, BiComment, BiLike } from "react-icons/bi"
 import { Link } from "react-router-dom";
 
-const Article = ({ image, title, author, created, likes, comments, id }) => {
+const Article = ({ image, title, author, created, likes, id }) => {
 
     return ( 
         <Link to={`/article/${id}`} className="singleArticle__link">
@@ -21,9 +21,6 @@ const Article = ({ image, title, author, created, likes, comments, id }) => {
                                 {likes ? likes : 0} <BiLike className="icon--extraSmall"/>
                             </p>
 
-                            <p>
-                                {comments ? comments : 0} <BiComment className="icon--extraSmall"/>
-                            </p>
                         </div>
                     </div>
                 </div>

@@ -33,7 +33,7 @@ const CreateArticle = () => {
             readDoc("articles", res.id)
             .then(articleData => {
                 const newArray = [...articles, articleData.data()]
-                updateDoc("users", user.uid, {articles: newArray.map(article => article.id)})
+                updateDoc("users", user.uid, {articles: newArray.filter(item => item.authorId == user.uid).map(article => article.id)})
                 setIsLoading(false)
                 history.push("/")
             })

@@ -13,18 +13,28 @@ const ArticlePreview = () => {
     const [user, setUser] = useContext(UserContext)
     const [article, setArticle] = useState(null);
     const [isLoading, setIsLoading] = useState(true);
+    const [isLiked, setIsLiked] = useState(false)
     const history = useHistory()
 
 
     useEffect(() => {
-        const read = readDoc("articles", id)
-        .then(res => {
-            setArticle(res.data())
+        readDoc("articles", id)
+        .then(article => {
+            setArticle(article.data())
             setIsLoading(false)
+            if(user != null){
+                readDoc("users", user.uid)
+                .then(user => {
+                    if(user.data().likedArticles.indexOf(article.id) >= 0 && user.data().likedArticles != null){
+                        setIsLiked(true)
+                    }
+                }).catch(err => {
+                    setIsLiked(false)
+                })
+            }
         })
         .catch(err => console.log(err))
-        console.log(user)
-
+        
     }, [])
 
 
@@ -45,16 +55,28 @@ const ArticlePreview = () => {
     }
 
     const handleLike = () => {
-        readDoc("users", user.uid)
-        .then((res) => {
-            if(res.data().likedArticles){
-                console.log("liked out")
-            } else{
-                console.log("liked")
-            }
-        }).catch(err => {
-            console.log(err)
-        })
+        if(user != null){
+            readDoc("users", user.uid )
+            .then((res) => {
+                const prevItems = res.data().likedArticles && res.data().likedArticles
+                const prevLikes = article.likes ? article.likes : 0
+    
+                if(res.data().likedArticles.indexOf(article.id) >= 0 && res.data().likedArticles != null){
+                    updateDoc("users", user.uid, {likedArticles: prevItems.filter(id => id != article.id)})
+                    updateDoc("articles", article.id, {likes: prevLikes - 1})
+                    setIsLiked(false)
+                } else{
+                    updateDoc("users", user.uid, {likedArticles: [...prevItems, article.id]})
+                    updateDoc("articles", article.id, {likes: prevLikes + 1})
+                    setIsLiked(true)
+                }
+            }).catch(err => {
+                console.log(err)
+            })
+        } else{
+            history.push("/register")
+        }
+        
     }
 
     return (
@@ -67,7 +89,7 @@ const ArticlePreview = () => {
                         <span>{isToday(article.created.toDate()) ? "today" : format(new Date(article.created.toDate()), 'd. M. EEEE,  h:mm aa')}</span>
                         <hr />
                         <p>{parser(article.body)}</p>
-                        <button onClick={handleLike}>Like</button>
+                        <button onClick={handleLike}>{isLiked ? "dislike" : "like"}</button>
                         {user != null && user.uid == article.authorId ? <button onClick={handleRemove}>Remove</button> : false}
                     </div>
                 </>

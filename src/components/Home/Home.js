@@ -1,6 +1,5 @@
 import Articles from "../Articles/Articles";
 import ProfilesList from "../Profiles/ProfilesList";
-import "./Home.css"
 
 const Home = () => {
     return ( 

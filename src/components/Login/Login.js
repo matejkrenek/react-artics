@@ -30,7 +30,14 @@ const Login = () => {
     const handleGoogleLogin = () => {
         const google = googleLogin()
         .then((res) => {
-            storeUserInFirestore(res.user, "google")
+            readDoc("users", res.user.uid)
+            .then(user => {
+                if(user.data() == undefined){
+                    storeUserInFirestore(res.user, "google")
+                }
+            }).catch(err => {
+                console.log(err)
+            })
         }).catch(err => {
             setErrorMessage(err.message)
         })

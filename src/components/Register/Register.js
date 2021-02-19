@@ -1,7 +1,7 @@
 import { useState, useContext, useEffect } from "react"
 import { Link, useHistory } from "react-router-dom"
 import { FaGoogle } from "react-icons/fa"
-import { emailSignup, googleLogin, storeUserInFirestore } from "../../firebase/firebase"
+import { emailSignup, googleLogin, readDoc, storeUserInFirestore } from "../../firebase/firebase"
 import Loader from "../../widgets/Loader/Loader"
 import { UserContext } from "../../contexts/UserContext"
 
@@ -32,8 +32,14 @@ const Register = () => {
     const handleGoogleRegistration = () => {
         const google = googleLogin()
         .then((res) => {
-            storeUserInFirestore(res.user, "google")
-            console.log(res.user)
+            readDoc("users", res.user.uid)
+            .then(user => {
+                if(user.data() == undefined){
+                    storeUserInFirestore(res.user, "google")
+                }
+            }).catch(err => {
+                console.log(err)
+            })
         }).catch(err => {
             setErrorMessage(err.message)
         })

@@ -4,7 +4,7 @@ import { db } from "../config"
 export const ArticleContext = createContext();
 
 export const ArticleProvider = (props) => {
-    const [articles, setArticles] = useState([])
+    const [articles, setArticles] = useState()
 
     useEffect(() => {
         db.collection("articles").onSnapshot((items) => {
@@ -19,10 +19,16 @@ export const ArticleProvider = (props) => {
                     return b.created.toDate() - a.created.toDate()
                 })
     
-                setArticles(arr)
+                if(arr.length > 0){
+                    setArticles(arr)
+                } else{
+                    setArticles(null)
+                }
+
             }
             catch(err){
                 console.log(err)
+                setArticles(null)
             }
         })
     }, [])

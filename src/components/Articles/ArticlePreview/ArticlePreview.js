@@ -1,12 +1,13 @@
 import { useState, useEffect } from "react";
-import { useParams } from "react-router-dom";
-import { removeDoc, readDoc, updateDoc } from "../../../firebase/firebase";
+import { Link, useParams } from "react-router-dom";
+import { removeDoc, readDoc, updateDoc, readCollection } from "../../../firebase/firebase";
 import { format, isToday } from "date-fns"
 import { useHistory } from "react-router-dom"
 import parser from "html-react-parser"
 import Loader from "../../../widgets/Loader/Loader";
 import { useContext } from "react";
 import { UserContext } from "../../../contexts/UserContext";
+import { BiChevronLeft, BiLike, BiTrash, BiEditAlt } from "react-icons/bi"
 
 const ArticlePreview = () => {
     const { id } = useParams();
@@ -48,8 +49,15 @@ const ArticlePreview = () => {
             }).catch(err => {
                 console.log(err)
             })
-
-
+        }).then((res) => {
+            readCollection("users")
+            .then((users) => {
+                users.forEach(user => {
+                    if(user.data().likedArticles.indexOf(article.id) >= 0){
+                        updateDoc("users", user.data().uid, {likedArticles: user.data().likedArticles.filter(articleId => articleId != article.id)})
+                    }
+                })
+            }).catch(err => console.log(err))
         })
         .catch(err => console.log(err))
     }
@@ -75,8 +83,7 @@ const ArticlePreview = () => {
             })
         } else{
             history.push("/register")
-        }
-        
+        }   
     }
 
     return (
@@ -84,13 +91,17 @@ const ArticlePreview = () => {
             {isLoading ? <Loader/> : 
                 <>
                     <div className="content--container">
+                        <Link onClick={history.goBack} className="backBtn flex-box ai-center"><BiChevronLeft/> Go back</Link>
                         <h1>{article.title}</h1>
                         <p>Wrote by {article.author}</p>
                         <span>{isToday(article.created.toDate()) ? "today" : format(new Date(article.created.toDate()), 'd. M. EEEE,  h:mm aa')}</span>
                         <hr />
-                        <p>{parser(article.body)}</p>
-                        <button onClick={handleLike}>{isLiked ? "dislike" : "like"}</button>
-                        {user != null && user.uid == article.authorId ? <button onClick={handleRemove}>Remove</button> : false}
+                        <p className="ArticleBody">{parser(article.body)}</p>
+                        <div className="btn__container">
+                            <button className={isLiked ? "likeBtn filled" : "likeBtn outlined"} onClick={handleLike}><BiLike /> like</button>
+                            {user != null && user.uid == article.authorId ? <button className="removeBtn" onClick={handleRemove}><BiTrash /> Remove</button> : false}
+                            {user != null && user.uid == article.authorId ? <Link className="editBtn" to={`/article/edit/${id}`}><BiEditAlt /> Edit</Link> : false}
+                        </div>
                     </div>
                 </>
             }

@@ -26,7 +26,7 @@ const storeUserInFirestore = (user, service) => {
 }
 
 const updateDoc = (collectionName, docId, data) => {
-    db.collection(collectionName).doc(docId).update(data)
+    return db.collection(collectionName).doc(docId).update(data)
 }
 
 const readDoc = (collectionName, docId) => {
@@ -36,6 +36,10 @@ const readDoc = (collectionName, docId) => {
 const removeDoc = (collectionName, docId) => {
     return db.collection(collectionName).doc(docId).delete()
 }
+
+const readCollection = (collectionName) => {
+    return db.collection(collectionName).get()
+}
  
 export {
     emailSignup,
@@ -44,5 +48,6 @@ export {
     storeUserInFirestore,
     updateDoc,
     readDoc,
-    removeDoc
+    removeDoc,
+    readCollection
 }

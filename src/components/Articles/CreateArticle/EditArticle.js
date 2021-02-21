@@ -1,68 +1,50 @@
 import { useState, useContext, useEffect } from "react";
 import { CKEditor } from "@ckeditor/ckeditor5-react";
 import ClassicEditor from "@ckeditor/ckeditor5-build-classic";
-import { useHistory } from "react-router-dom"
+import { useHistory, useParams } from "react-router-dom"
 import { db } from "../../../config"
 import { UserContext } from "../../../contexts/UserContext";
 import Loader from "../../../widgets/Loader/Loader";
 import { readDoc, updateDoc } from "../../../firebase/firebase";
 import { ArticleContext } from "../../../contexts/ArticleContext";
 
-const CreateArticle = () => {
+const EditArticle = () => {
+    const { id } = useParams()
     const [title, setTitle] = useState("");
     const [body, setBody] = useState("");
     const [user, setUser] = useContext(UserContext);
-    const [articles, setArticles] = useContext(ArticleContext);
     const [isLoading, setIsLoading] = useState(false);
     const history = useHistory();
-
-    const handleSubmit = (e) => {
-        e.preventDefault()
-        setIsLoading(true)
-        db.collection("articles").add({
-            title: title,
-            author: user.displayName ? user.displayName : user.email,
-            authorId: user.uid,
-            body: body,
-            created: new Date(),
-        }).then(res => {
-            db.collection("articles").doc(res.id).update({
-                id: res.id
-            })
-
-            readDoc("articles", res.id)
-            .then(articleData => {
-                let newArray = [...articles, articleData.data()]
-                if(articles === null){
-                    newArray = [articleData.data()]
-                }
-                updateDoc("users", user.uid, {articles: newArray.filter(item => item.authorId == user.uid).map(article => article.id)})
-                setIsLoading(false)
-                history.push("/")
-            })
-            .catch(err => console.log(err))
-
-
-
-        })
-        .catch(err => {
-            setIsLoading(false)
-            console.log(err.message)
-        })
-
-    }
 
     useEffect(() => {
         if(!user){
             history.push("/register")
         }
+
+        readDoc("articles", id)
+        .then((res) => {
+            setTitle(res.data().title)
+            setBody(res.data().body)
+        }).catch(err => console.log(err))
     }, [user])
+
+    const handleSubmit = (e) => {
+        e.preventDefault()
+        setIsLoading(true)
+
+        updateDoc("articles", id, {title, body})
+        .then(res => {
+            setIsLoading(false)
+            history.goBack()
+        })
+        .catch((err) => console.log(err))
+    }
 
     return ( 
         <div className="smallContent--container">
             <div className="errorMessage"></div>
             <div className="authHeader">
-                <h1>Create your own article</h1>
+                <h1>Edit your article</h1>
             </div>
             <form onSubmit={handleSubmit}>
                 <div className="inputField">
@@ -85,11 +67,11 @@ const CreateArticle = () => {
                     />
                 </div>
                 <button type="submit" className="btn blue">
-                    {isLoading ? <Loader /> : "Create an Article"}
+                    {isLoading ? <Loader /> : "Edit an Article"}
                 </button>
             </form>
         </div> 
      );
 }
  
-export default CreateArticle;
+export default EditArticle;

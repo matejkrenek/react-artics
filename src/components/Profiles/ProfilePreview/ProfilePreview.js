@@ -1,10 +1,11 @@
 import { useState, useEffect, useContext } from "react"
-import { useParams } from "react-router-dom"
+import { Link, useParams, useHistory } from "react-router-dom"
 import { format, isToday } from "date-fns"
 import { UserContext } from "../../../contexts/UserContext"
 import { readDoc } from "../../../firebase/firebase"
 import Loader from "../../../widgets/Loader/Loader"
 import Article from "../../Articles/Article/Article"
+import { BiChevronLeft } from "react-icons/bi"
 
 const ProfilePreview = () => {
     const { uid } = useParams()
@@ -13,6 +14,7 @@ const ProfilePreview = () => {
     const [isLoading, setIsLoading] = useState(true)
     const [userArticles, setUserArticles] = useState()
     const [userLikedArticles, setUserLikedArticles] = useState()
+    const history = useHistory()
 
     useEffect(() => {
         if(uid == undefined && !thisUser){
@@ -64,23 +66,28 @@ const ProfilePreview = () => {
                     }).catch(err => console.log(err))
                 })
             }
-            else{
-                setUserArticles(null)
-                setUserLikedArticles(null)
-            }
+        }
 
+        else{
+            setUserArticles(null)
+            setUserLikedArticles(null)
         }
     }, [thisUser])
+
+
     
     return ( 
         <>
             {isLoading ? <Loader /> : 
                 <div className="content--container">
+                    <Link onClick={history.goBack} className="backBtn flex-box ai-center"><BiChevronLeft/> Go back</Link>
                     <div className="flex-box ai-center">
                         <div className="userImage">
                             <img src={thisUser.photoURL} alt=""/>
                         </div>
-                        <h1>{thisUser.displayName ? thisUser.displayName : thisUser.email}</h1>
+                        <div className="flex-box ai-center">
+                            <h1>{thisUser.displayName ? thisUser.displayName : thisUser.email}</h1>
+                        </div>
                     </div>
                     <hr />
                     <div>

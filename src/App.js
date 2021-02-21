@@ -12,6 +12,7 @@ import { UserProvider } from "./contexts/UserContext"
 import ArticlePreview from "./components/Articles/ArticlePreview/ArticlePreview";
 import { UsersProvider } from "./contexts/UsersContext";
 import ProfilePreview from "./components/Profiles/ProfilePreview/ProfilePreview";
+import EditArticle from "./components/Articles/CreateArticle/EditArticle";
 
 const App = () => {  
   return (
@@ -32,6 +33,9 @@ const App = () => {
               </Route>
               <Route exact path="/create">
                 <CreateArticle />
+              </Route>
+              <Route exact path="/article/edit/:id">
+                <EditArticle />
               </Route>
               <Route exact path="/article/:id">
                 <ArticlePreview />

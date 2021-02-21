@@ -214,6 +214,79 @@ form .btn--blue{
     background: #1f232aef;
 }
 
+.editButton{
+    font-size: 24px;
+    border: 0;
+    background-color: transparent;
+    color: var(--react-blue);
+    cursor: pointer;
+    margin-left: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    outline: none;
+}
+
+.likeBtn,
+.removeBtn,
+.editBtn{
+    padding: 4px 12px;
+    cursor: pointer;
+    background-color: transparent;
+    border: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 16px;
+    outline: none;
+    border: 2px solid transparent;
+}
+
+.btn__container{
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.editBtn{
+    background-color: var(--react-blue);
+    width: fit-content;
+}
+
+.removeBtn{
+    background-color: rgb(221, 19, 19);
+    color: var(--react-white);
+}
+
+.likeBtn.outlined{
+    border: 2px solid var(--react-black);
+}
+
+.likeBtn.filled{
+    background-color: var(--react-black);
+    color: var(--react-blue);
+}
+
+.likeBtn svg,
+.removeBtn svg,
+.editBtn svg{
+    margin-right: 4px;
+}
+
+.backBtn{
+    margin-bottom: 12px;
+    color: var(--react-blue);
+}
+
+.backBtn svg{
+    margin-right: 12px;
+    transition: 0.3s ease;
+}
+
+.backBtn:hover svg{
+    margin-right: 4px;
+}
+
 .authHeader{
     margin-bottom: 42px;
 }
@@ -343,6 +416,10 @@ a .icon--small:hover{
 
 .singleArticle__stats p{
     margin-left: 12px;
+}
+
+.ArticleBody{
+    margin-bottom: 32px;
 }
 
 .profiles{
